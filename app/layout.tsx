@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 import ConditionalShell from "@/components/layout/ConditionalShell";
 
@@ -126,6 +127,19 @@ export default function RootLayout({
         <ConditionalShell>
           {children}
         </ConditionalShell>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0FTW0TGRQ3"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-0FTW0TGRQ3');
+          `}
+        </Script>
       </body>
     </html>
   );
