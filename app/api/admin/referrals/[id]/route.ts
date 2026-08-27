@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAuthenticatedAdmin } from '@/lib/admin-auth';
 import { updateReferralCode, deleteReferralCode } from '@/lib/referrals';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 interface RouteContext {
   params: Promise<{ id: string }>;
 }

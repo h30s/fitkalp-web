@@ -68,7 +68,8 @@ export function getAdminConfig() {
     process.env.ADMIN_KEY_1 ||
     process.env.ADMIN_KEY1 ||
     process.env.PASSWORD_1 ||
-    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_1
+    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_1 ||
+    'Aman@789'
   );
 
   const p2 = cleanEnvValue(
@@ -80,7 +81,8 @@ export function getAdminConfig() {
     process.env.ADMIN_KEY_2 ||
     process.env.ADMIN_KEY2 ||
     process.env.PASSWORD_2 ||
-    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_2
+    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_2 ||
+    'Hemant#456'
   );
 
   const p3 = cleanEnvValue(
@@ -92,7 +94,8 @@ export function getAdminConfig() {
     process.env.ADMIN_KEY_3 ||
     process.env.ADMIN_KEY3 ||
     process.env.PASSWORD_3 ||
-    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_3
+    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_3 ||
+    'Tushar$123'
   );
 
   const secret = cleanEnvValue(
@@ -103,7 +106,7 @@ export function getAdminConfig() {
     process.env.SECRET_KEY ||
     process.env.JWT_SECRET ||
     process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY ||
-    'fitkalp-production-triple-key-session-secret-2026'
+    'fitkalp-super-secure-tripl4567890-9876545GBHJU^%RFVBHU^%'
   );
 
   return { p1, p2, p3, secret };

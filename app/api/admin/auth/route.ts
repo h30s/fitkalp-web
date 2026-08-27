@@ -15,6 +15,9 @@ import {
   resetRateLimit,
 } from '@/lib/rate-limiter';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function POST(request: NextRequest) {
   try {
     const clientIp = getClientIp(request);

@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createLead, Lead } from '@/lib/leads';
 import { validateReferralCode, normalizeReferralCode } from '@/lib/referrals';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function POST(request: NextRequest) {
   try {
     const contentLength = Number(request.headers.get('content-length') ?? 0);

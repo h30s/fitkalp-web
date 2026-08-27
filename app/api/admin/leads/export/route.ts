@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isAuthenticatedAdmin } from '@/lib/admin-auth';
 import { getAllLeads, generateLeadsCsv } from '@/lib/leads';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(request: NextRequest) {
   if (!isAuthenticatedAdmin(request)) {
     return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
