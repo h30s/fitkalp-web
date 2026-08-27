@@ -39,16 +39,28 @@ function readEnvLocal(): Record<string, string> {
   return envMap;
 }
 
+function cleanEnvValue(val?: string): string {
+  if (!val) return '';
+  let trimmed = val.trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    trimmed = trimmed.slice(1, -1);
+  }
+  return trimmed.trim();
+}
+
 /**
  * Fetches the active admin authentication credentials dynamically.
  * Prioritizes direct file read (.env.local) for instant local updates, then falls back to process.env.
  */
 export function getAdminConfig() {
   const localEnv = readEnvLocal();
-  const p1 = (localEnv.ADMIN_PASSWORD_1 || process.env.ADMIN_PASSWORD_1 || '').trim();
-  const p2 = (localEnv.ADMIN_PASSWORD_2 || process.env.ADMIN_PASSWORD_2 || '').trim();
-  const p3 = (localEnv.ADMIN_PASSWORD_3 || process.env.ADMIN_PASSWORD_3 || '').trim();
-  const secret = (localEnv.ADMIN_SECRET_KEY || process.env.ADMIN_SECRET_KEY || '').trim();
+  const p1 = cleanEnvValue(localEnv.ADMIN_PASSWORD_1 || process.env.ADMIN_PASSWORD_1);
+  const p2 = cleanEnvValue(localEnv.ADMIN_PASSWORD_2 || process.env.ADMIN_PASSWORD_2);
+  const p3 = cleanEnvValue(localEnv.ADMIN_PASSWORD_3 || process.env.ADMIN_PASSWORD_3);
+  const secret = cleanEnvValue(localEnv.ADMIN_SECRET_KEY || process.env.ADMIN_SECRET_KEY);
 
   return { p1, p2, p3, secret };
 }
