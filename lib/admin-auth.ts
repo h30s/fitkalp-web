@@ -54,15 +54,71 @@ function cleanEnvValue(val?: string): string {
 /**
  * Fetches the active admin authentication credentials dynamically.
  * Prioritizes direct file read (.env.local) for instant local updates, then falls back to process.env.
+ * Also supports common naming aliases and a fallback session secret.
  */
 export function getAdminConfig() {
   const localEnv = readEnvLocal();
-  const p1 = cleanEnvValue(localEnv.ADMIN_PASSWORD_1 || process.env.ADMIN_PASSWORD_1);
-  const p2 = cleanEnvValue(localEnv.ADMIN_PASSWORD_2 || process.env.ADMIN_PASSWORD_2);
-  const p3 = cleanEnvValue(localEnv.ADMIN_PASSWORD_3 || process.env.ADMIN_PASSWORD_3);
-  const secret = cleanEnvValue(localEnv.ADMIN_SECRET_KEY || process.env.ADMIN_SECRET_KEY);
+
+  const p1 = cleanEnvValue(
+    localEnv.ADMIN_PASSWORD_1 ||
+    process.env.ADMIN_PASSWORD_1 ||
+    process.env.ADMIN_PASSWORD1 ||
+    process.env.ADMIN_PASS_1 ||
+    process.env.ADMIN_PASS1 ||
+    process.env.ADMIN_KEY_1 ||
+    process.env.ADMIN_KEY1 ||
+    process.env.PASSWORD_1 ||
+    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_1
+  );
+
+  const p2 = cleanEnvValue(
+    localEnv.ADMIN_PASSWORD_2 ||
+    process.env.ADMIN_PASSWORD_2 ||
+    process.env.ADMIN_PASSWORD2 ||
+    process.env.ADMIN_PASS_2 ||
+    process.env.ADMIN_PASS2 ||
+    process.env.ADMIN_KEY_2 ||
+    process.env.ADMIN_KEY2 ||
+    process.env.PASSWORD_2 ||
+    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_2
+  );
+
+  const p3 = cleanEnvValue(
+    localEnv.ADMIN_PASSWORD_3 ||
+    process.env.ADMIN_PASSWORD_3 ||
+    process.env.ADMIN_PASSWORD3 ||
+    process.env.ADMIN_PASS_3 ||
+    process.env.ADMIN_PASS3 ||
+    process.env.ADMIN_KEY_3 ||
+    process.env.ADMIN_KEY3 ||
+    process.env.PASSWORD_3 ||
+    process.env.NEXT_PUBLIC_ADMIN_PASSWORD_3
+  );
+
+  const secret = cleanEnvValue(
+    localEnv.ADMIN_SECRET_KEY ||
+    process.env.ADMIN_SECRET_KEY ||
+    process.env.ADMIN_SECRET ||
+    process.env.AUTH_SECRET ||
+    process.env.SECRET_KEY ||
+    process.env.JWT_SECRET ||
+    process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY ||
+    'fitkalp-production-triple-key-session-secret-2026'
+  );
 
   return { p1, p2, p3, secret };
+}
+
+/**
+ * Returns a list of any missing required keys (ADMIN_PASSWORD_1, ADMIN_PASSWORD_2, ADMIN_PASSWORD_3).
+ */
+export function getMissingAdminConfigKeys(): string[] {
+  const { p1, p2, p3 } = getAdminConfig();
+  const missing: string[] = [];
+  if (!p1) missing.push('ADMIN_PASSWORD_1');
+  if (!p2) missing.push('ADMIN_PASSWORD_2');
+  if (!p3) missing.push('ADMIN_PASSWORD_3');
+  return missing;
 }
 
 /**

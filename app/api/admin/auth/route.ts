@@ -4,6 +4,7 @@ import {
   createAdminToken,
   isAuthenticatedAdmin,
   isAdminConfigured,
+  getMissingAdminConfigKeys,
   setAdminCookie,
   clearAdminCookie,
 } from '@/lib/admin-auth';
@@ -39,11 +40,13 @@ export async function POST(request: NextRequest) {
     }
 
     // 2. Check if server environment variables are configured
-    if (!isAdminConfigured()) {
+    const missingKeys = getMissingAdminConfigKeys();
+    if (missingKeys.length > 0) {
       return NextResponse.json(
         {
-          error: 'Admin authentication is not configured in server environment variables (ADMIN_PASSWORD_1, ADMIN_PASSWORD_2, ADMIN_PASSWORD_3, ADMIN_SECRET_KEY).',
+          error: `Missing server environment variable(s) on Render: ${missingKeys.join(', ')}. Please add them under Render Dashboard -> Environment.`,
           isConfigured: false,
+          missingKeys,
         },
         { status: 503 }
       );
