@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: fitkalp-web
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_PUBLIC_CRM_URL
+        sync: false
+      - key: CRM_SERVER_URL
+        sync: false
+      - key: ADMIN_PASSWORD_1
+        sync: false
+      - key: ADMIN_PASSWORD_2
+        sync: false
+      - key: ADMIN_PASSWORD_3
+        sync: false
+      - key: ADMIN_SECRET_KEY
+        sync: false
